@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
-       xmlns:controls="clr-namespace:TextEditor.Views.Controls"
+        xmlns:controls="clr-namespace:TextEditor.Views.Controls"
         xmlns:local="clr-namespace:TextEditor"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
@@ -12,7 +12,8 @@
         MinHeight="400"
         AllowsTransparency="True"
         WindowStyle="None"
-        Background="Transparent" Foreground="{StaticResource Foreground.Primary}">
+        Background="Transparent" Foreground="{StaticResource Foreground.Primary}"
+        PreviewKeyDown="Window_PreviewKeyDown">
 
     <shell:WindowChrome.WindowChrome>
         <shell:WindowChrome CaptionHeight="44"
@@ -40,19 +41,19 @@
 
             <Grid Grid.Row="0">
                 <StackPanel Orientation="Horizontal" WindowChrome.IsHitTestVisibleInChrome="True">
-                    <Button Content="Select File" 
-    VerticalAlignment="Stretch" 
-    HorizontalAlignment="Stretch"
-    Click="SelectDirectory_Click"
-                           Padding="5"
-    Style="{StaticResource DefaultButton}"/>
-                    <Button Content="Save File"
-        Name="ButtonSaveFile"
-        VerticalAlignment="Stretch"
-        HorizontalAlignment="Stretch"
-        Click="SaveFile_Click"
+                    <Button Content="Select File"
+                            VerticalAlignment="Stretch"
+                            HorizontalAlignment="Stretch"
+                            Click="SelectDirectory_Click"
                             Padding="5"
-        Style="{StaticResource DefaultButton}"/>
+                            Style="{StaticResource DefaultButton}"/>
+                    <Button Content="Save File"
+                            Name="ButtonSaveFile"
+                            VerticalAlignment="Stretch"
+                            HorizontalAlignment="Stretch"
+                            Click="SaveFile_Click"
+                            Padding="5"
+                            Style="{StaticResource DefaultButton}"/>
 
                     <Label Name="SelectedFileName" Foreground="{StaticResource Foreground.Secondary}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10 0 0 0"/>
 
@@ -61,8 +62,8 @@
 
             <Grid Grid.Row="2">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Left">
-                    <Label Name="LettersCountText"  Foreground="{StaticResource Foreground.Secondary}" Margin="10 0 0 0"/>
-                    <Label Name="FileSizeText" Foreground="{StaticResource Foreground.Secondary}"  Margin="10 0 0 0"/>
+                    <Label Name="LettersCountText" Foreground="{StaticResource Foreground.Secondary}" Margin="10 0 0 0"/>
+                    <Label Name="FileSizeText" Foreground="{StaticResource Foreground.Secondary}" Margin="10 0 0 0"/>
                 </StackPanel>
             </Grid>
 
@@ -75,9 +76,72 @@
                          WindowChrome.IsHitTestVisibleInChrome="True"
                          Padding="5"
                          FocusVisualStyle="{x:Null}"
-                         Name="FileContentTextBox" TextChanged="OnTextChanged"
-                         TextWrapping="Wrap" AcceptsReturn="True" 
-                         VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Grid.ColumnSpan="2"/>
+                         Name="FileContentTextBox"
+                         TextChanged="OnTextChanged"
+                         TextWrapping="Wrap"
+                         AcceptsReturn="True"
+                         VerticalScrollBarVisibility="Auto"
+                         HorizontalScrollBarVisibility="Auto"
+                         Grid.ColumnSpan="2"/>
+
+                <Border x:Name="SearchPanel"
+                        Grid.ColumnSpan="2"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Margin="20 10 20 20"
+                        Padding="8"
+                        CornerRadius="6"
+                        Background="{StaticResource Background.Subtle}"
+                        BorderBrush="{StaticResource Border.Default}"
+                        BorderThickness="1"
+                        Visibility="Collapsed"
+                        Panel.ZIndex="10">
+                    <StackPanel Width="320">
+                        <DockPanel LastChildFill="False" Margin="0 0 0 6">
+                            <TextBlock Text="Search"
+                                       FontWeight="SemiBold"
+                                       VerticalAlignment="Center"
+                                       DockPanel.Dock="Left"/>
+                            <Button Content="✕"
+                                    Width="24"
+                                    Height="24"
+                                    Padding="0"
+                                    Margin="8 0 0 0"
+                                    Click="CloseSearchPanel_Click"
+                                    Style="{StaticResource DefaultButton}"
+                                    DockPanel.Dock="Right"/>
+                        </DockPanel>
+
+                        <TextBox x:Name="SearchTextBox"
+                                 Style="{StaticResource DefaultTextBox}"
+                                 Margin="0 0 0 6"
+                                 TextChanged="SearchTextBox_TextChanged"
+                                 KeyDown="SearchTextBox_KeyDown"/>
+
+                        <StackPanel Orientation="Horizontal" Margin="0 0 0 4">
+                            <CheckBox x:Name="MatchCaseCheckBox"
+                                      Content="Uppercase/-Lowercase"
+                                      Margin="0 0 8 0"
+                                      Checked="SearchOptions_Changed"
+                                      Unchecked="SearchOptions_Changed"/>
+                            <Button Content="Previous"
+                                    Click="FindPrevious_Click"
+                                    Style="{StaticResource DefaultButton}"
+                                    Padding="10"
+                                    FontSize="11"
+                                    Margin="0 0 6 0"/>
+                            <Button Content="Next"
+                                    Padding="10"
+                                    FontSize="11"
+                                    Click="FindNext_Click"
+                                    Style="{StaticResource DefaultButton}"/>
+                        </StackPanel>
+
+                        <TextBlock x:Name="SearchStatusText"
+                                   Foreground="{StaticResource Foreground.Secondary}"
+                                   Text="Enter your input"/>
+                    </StackPanel>
+                </Border>
             </Grid>
         </Grid>
     </Border>

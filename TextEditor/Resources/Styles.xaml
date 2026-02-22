@@ -34,6 +34,45 @@
         </Setter>
     </Style>
 
+    <Style TargetType="CheckBox">
+        <Setter Property="Margin" Value="0,3,12,3"/>
+        <Setter Property="Foreground" Value="{StaticResource Foreground.Primary}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="CheckBox">
+                    <StackPanel Orientation="Horizontal">
+                        <Border Width="14" Height="14"
+                            VerticalAlignment="Center"
+                            Background="{StaticResource Background.Default}"
+                            BorderBrush="{StaticResource Border.Default}"
+                            BorderThickness="1"
+                            CornerRadius="2"
+                            Margin="0,0,6,0">
+                            <Path x:Name="CheckMark"
+                              Data="M 2 7 L 5 10 L 11 3"
+                              Stroke="{StaticResource Foreground.Emphasis}"
+                              StrokeThickness="1.8"
+                              Stretch="Fill"
+                              Opacity="0"/>
+                        </Border>
+                        <ContentPresenter VerticalAlignment="Center" RecognizesAccessKey="True"/>
+                    </StackPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="CheckMark" Property="Opacity" Value="1"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" Value="{StaticResource Foreground.Emphasis}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.6"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style TargetType="TextBox" x:Key="DefaultTextBox">
         <Setter Property="Background" Value="{StaticResource Button.Default}"/>
         <Setter Property="BorderBrush" Value="{StaticResource Border.Default}"/>
