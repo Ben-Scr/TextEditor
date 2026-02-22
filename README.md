@@ -1,5 +1,5 @@
 # C# WPF TextEditor
-A Simple C# Text Editor for Windows
+A Simple C# Text Editor made for Windows
 
 ## Preview
 <p align="Center">
