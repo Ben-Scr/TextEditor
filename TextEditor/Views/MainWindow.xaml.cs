@@ -10,6 +10,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
+using TextEditor.Resources;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace TextEditor
@@ -49,10 +50,14 @@ namespace TextEditor
             currentFilePath = path;
 
             if(readFile)
+            {
                 FileContentTextBox.Text = File.ReadAllText(currentFilePath, Encoding.UTF8);
+                FileSizeText.Content = Utility.ToSI((ulong)new FileInfo(currentFilePath).Length);
+            }
 
             int lettersLength = FileContentTextBox.Text.Length;
             LettersCountText.Content = $"{lettersLength} {(lettersLength == 1 ? "Letter" : "Letters")}";
+
 
             SelectedFileName.Content = Path.GetFileName(currentFilePath);
         }
